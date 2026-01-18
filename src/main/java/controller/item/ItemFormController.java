@@ -1,4 +1,4 @@
-package controller;
+package controller.item;
 
 import com.jfoenix.controls.JFXTextField;
 import db.DbConnection;
@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import model.Item;
 import model.tm.ItemTM;
 
 import java.net.URL;
@@ -16,6 +17,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class ItemFormController implements Initializable {
@@ -96,28 +98,21 @@ public class ItemFormController implements Initializable {
     }
 
     private void loadTable(){
-        try {
-            Connection connection = DbConnection.getInstance().getConnection();
-            ResultSet resultSet = connection.createStatement().executeQuery("SELECT * FROm item");
+        ItemServiceImpl itemService = new ItemServiceImpl();
+        List<Item> all = itemService.getAll();
 
-            ArrayList<ItemTM> itemTMArrayList = new ArrayList<>();
+        ArrayList<ItemTM> itemTMArrayList = new ArrayList<>();
+        all.forEach(item -> {
+            itemTMArrayList.add(new ItemTM(
+                    item.getCode(),
+                    item.getDescription(),
+                    item.getPackSize(),
+                    item.getUnitPrice(),
+                    item.getStock()
+            ));
+        });
+        tblItems.setItems(FXCollections.observableArrayList(itemTMArrayList));
 
-            while (resultSet.next()){
-                ItemTM itemTM = new ItemTM(
-                        resultSet.getString(1),
-                        resultSet.getString(2),
-                        resultSet.getString(3),
-                        resultSet.getDouble(4),
-                        resultSet.getInt(5)
-                );
-                itemTMArrayList.add(itemTM);
-            }
-
-            tblItems.setItems(FXCollections.observableArrayList(itemTMArrayList));
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
     }
 
 
