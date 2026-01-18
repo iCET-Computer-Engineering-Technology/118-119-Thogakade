@@ -1,12 +1,14 @@
 package controller.customer;
 
 import db.DbConnection;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import model.Customer;
+import model.tm.CustomerTM;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerServiceImpl implements CustomerService {
@@ -45,16 +47,81 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public boolean deleteCustomer(String id) {
-        return false;
+        try {
+            Connection connection = DbConnection.getInstance().getConnection();
+
+            PreparedStatement psTm = connection.prepareStatement("DELETE FROM customer WHERE CustID=?");
+            psTm.setString(1,id);
+
+           return psTm.executeUpdate()>0;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public Customer searchCustomerById(String id) {
-        return null;
+        try {
+
+            Connection connection = DbConnection.getInstance().getConnection();
+
+            PreparedStatement psTM = connection.prepareStatement("SELECT * FROM customer WHERE CustID = ?");
+
+            psTM.setString(1,id);
+            ResultSet resultSet = psTM.executeQuery();
+
+            resultSet.next();
+
+            return new Customer(
+                    resultSet.getString(1),
+                    resultSet.getString(2),
+                    resultSet.getString(3),
+                    resultSet.getDate(4).toLocalDate(),
+                    resultSet.getDouble(5),
+                    resultSet.getString(6),
+                    resultSet.getString(7),
+                    resultSet.getString(8),
+                    resultSet.getString(9)
+            );
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public List<Customer> getAll() {
-        return List.of();
+        try {
+
+            Connection connection = DbConnection.getInstance().getConnection();
+
+            Statement statement = connection.createStatement();
+
+            ResultSet resultSet = statement.executeQuery("SELECT * FROm customer");
+
+            ArrayList<Customer> customerArrayList = new ArrayList<>();
+
+            while (resultSet.next()){
+                customerArrayList.add(
+                        new Customer(
+                                resultSet.getString(1),
+                                resultSet.getString(2),
+                                resultSet.getString(3),
+                                resultSet.getDate(4).toLocalDate(),
+                                resultSet.getDouble(5),
+                                resultSet.getString(6),
+                                resultSet.getString(7),
+                                resultSet.getString(8),
+                                resultSet.getString(9)
+                        )
+                );
+            }
+
+            return customerArrayList;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
