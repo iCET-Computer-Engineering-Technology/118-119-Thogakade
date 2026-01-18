@@ -2,7 +2,7 @@ package controller;
 
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
-import db.DBConnection;
+import db.DbConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -97,7 +97,7 @@ public class CustomerFormController implements Initializable {
 
         try {
 
-            Connection connection = DBConnection.getInstance().getConnection();
+            Connection connection = DbConnection.getInstance().getConnection();
 
             PreparedStatement psTm = connection.prepareStatement("INSERT INTO customer VALUES(?,?,?,?,?,?,?,?,?)");
 
@@ -146,7 +146,7 @@ public class CustomerFormController implements Initializable {
 
         try {
 
-            Connection connection = DBConnection.getInstance().getConnection();
+            Connection connection = DbConnection.getInstance().getConnection();
 
             Statement statement = connection.createStatement();
 
@@ -196,7 +196,7 @@ public class CustomerFormController implements Initializable {
     public void btnDeleteOnAction(ActionEvent actionEvent) {
 
         try {
-            Connection connection = DBConnection.getInstance().getConnection();
+            Connection connection = DbConnection.getInstance().getConnection();
 
             PreparedStatement psTm = connection.prepareStatement("DELETE FROM customer WHERE CustID=?");
             psTm.setString(1,txtId.getText());
@@ -216,7 +216,7 @@ public class CustomerFormController implements Initializable {
     public void btnSearchOnAction(ActionEvent actionEvent) {
         try {
 
-            Connection connection = DBConnection.getInstance().getConnection();
+            Connection connection = DbConnection.getInstance().getConnection();
 
             PreparedStatement psTM = connection.prepareStatement("SELECT * FROM customer WHERE CustID = ?");
 

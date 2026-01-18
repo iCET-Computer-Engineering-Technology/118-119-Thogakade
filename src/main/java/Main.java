@@ -1,15 +1,11 @@
-import db.DBConnection;
+import db.DbConnection;
+
+import java.sql.Connection;
+import java.sql.SQLException;
 
 public class Main {
     public static void main(String[] args) {
         Starter.main(args);
-
-//        DBConnection instance = DBConnection.getInstance();
-//        DBConnection instance2 = DBConnection.getInstance();
-//
-//        System.out.println(instance2.getConnection());
-//        System.out.println(instance);
-
     }
 
 }

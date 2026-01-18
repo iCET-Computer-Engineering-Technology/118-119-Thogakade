@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
@@ -10,27 +9,28 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DashboardController">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="555.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="5.0" width="177.0" />
-      <JFXButton layoutX="16.0" layoutY="207.0" onAction="#btnCustomerFormOnAction" prefHeight="37.0" prefWidth="141.0" style="-fx-background-color: #273c75;" text="Customer Form" textFill="WHITE">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#90c9ff" height="561.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="177.0" />
+      <JFXButton layoutX="16.0" layoutY="191.0" onAction="#btnCustomerFormOnAction" prefHeight="37.0" prefWidth="141.0" style="-fx-background-color: #273c75;" text="Customer Form" textFill="WHITE">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </JFXButton>
-      <JFXButton layoutX="16.0" layoutY="259.0" onAction="#btnItemFormOnAction" prefHeight="37.0" prefWidth="141.0" style="-fx-background-color: #273c75;" text="Item Form" textFill="WHITE">
+      <JFXButton layoutX="16.0" layoutY="243.0" onAction="#btnItemFormOnAction" prefHeight="37.0" prefWidth="141.0" style="-fx-background-color: #273c75;" text="Item Form" textFill="WHITE">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </JFXButton>
-      <JFXButton layoutX="16.0" layoutY="312.0" prefHeight="37.0" prefWidth="141.0" style="-fx-background-color: #273c75;" text="Order Form" textFill="WHITE">
+      <JFXButton layoutX="16.0" layoutY="296.0" prefHeight="37.0" prefWidth="141.0" style="-fx-background-color: #273c75;" text="Order Form" textFill="WHITE">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </JFXButton>
-      <ImageView fitHeight="53.0" fitWidth="53.0" layoutX="62.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../img/logo.png" />
-         </image>
-      </ImageView>
-      <AnchorPane fx:id="dashRoot" layoutX="181.0" layoutY="6.0" prefHeight="555.0" prefWidth="708.0" />
+      <AnchorPane fx:id="dashRoot" layoutX="177.0" layoutY="3.0" prefHeight="555.0" prefWidth="708.0" />
+      <Label layoutX="29.0" layoutY="52.0" text="Thogakade">
+         <font>
+            <Font name="System Bold" size="23.0" />
+         </font>
+      </Label>
+      <Label layoutX="35.0" layoutY="507.0" text="icet.edu@email.com" />
    </children>
 </AnchorPane>

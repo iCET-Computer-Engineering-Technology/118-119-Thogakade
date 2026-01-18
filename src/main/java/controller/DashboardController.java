@@ -34,7 +34,18 @@ public class DashboardController {
 
     @FXML
     void btnItemFormOnAction(ActionEvent event) {
+        try {
+            URL resource = this.getClass().getResource("/view/item_form.fxml");
 
+            assert resource != null;
+            Parent parent = FXMLLoader.load(resource);
+
+            dashRoot.getChildren().clear();
+            dashRoot.getChildren().add(parent);
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }
