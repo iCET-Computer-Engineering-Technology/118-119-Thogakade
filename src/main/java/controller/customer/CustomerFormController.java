@@ -83,6 +83,15 @@ public class CustomerFormController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        colId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        colName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
+        colSalary.setCellValueFactory(new PropertyValueFactory<>("salary"));
+        colCity.setCellValueFactory(new PropertyValueFactory<>("city"));
+        colDob.setCellValueFactory(new PropertyValueFactory<>("dob"));
+        colProvince.setCellValueFactory(new PropertyValueFactory<>("province"));
+        colPostalCode.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
+
         cmbTitle.setItems(
                 FXCollections.observableArrayList(
                         Arrays.asList("Mr", "Miss", "Ms")
@@ -143,15 +152,6 @@ public class CustomerFormController implements Initializable {
     }
 
     public void loadTable() {
-
-        colId.setCellValueFactory(new PropertyValueFactory<>("id"));
-        colName.setCellValueFactory(new PropertyValueFactory<>("name"));
-        colAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
-        colSalary.setCellValueFactory(new PropertyValueFactory<>("salary"));
-        colCity.setCellValueFactory(new PropertyValueFactory<>("city"));
-        colDob.setCellValueFactory(new PropertyValueFactory<>("dob"));
-        colProvince.setCellValueFactory(new PropertyValueFactory<>("province"));
-        colPostalCode.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
 
         List<Customer> all = new CustomerServiceImpl().getAll();
         ArrayList<CustomerTM> customerTMArrayList = new ArrayList<>();
