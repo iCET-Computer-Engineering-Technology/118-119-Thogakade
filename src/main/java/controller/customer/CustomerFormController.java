@@ -15,6 +15,10 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.Customer;
 import model.tm.CustomerTM;
+import service.ServiceFactory;
+import service.custom.CustomerService;
+import service.custom.impl.CustomerServiceImpl;
+import util.ServiceType;
 
 import java.net.URL;
 import java.sql.*;
@@ -80,6 +84,8 @@ public class CustomerFormController implements Initializable {
     @FXML
     private JFXTextField txtSalary;
 
+    CustomerService serviceType = ServiceFactory.getInstance().getServiceType(ServiceType.CUSTOMER);
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -138,7 +144,7 @@ public class CustomerFormController implements Initializable {
 
         System.out.println(customer);
 
-        if (new CustomerServiceImpl().addCustomer(customer)) {
+        if (serviceType.addCustomer(customer)) {
             new Alert(Alert.AlertType.INFORMATION, "Customer Added !").show();
         } else {
             new Alert(Alert.AlertType.ERROR, "Customer not Added !").show();
@@ -176,7 +182,7 @@ public class CustomerFormController implements Initializable {
     }
 
     public void btnDeleteOnAction(ActionEvent actionEvent) {
-        if (new CustomerServiceImpl().deleteCustomer(txtId.getText())) {
+        if (serviceType.deleteCustomer(txtId.getText())) {
             new Alert(Alert.AlertType.INFORMATION, "Customer Deleted!").show();
         } else {
             new Alert(Alert.AlertType.ERROR, "Customer NOT Deleted!").show();
@@ -184,7 +190,7 @@ public class CustomerFormController implements Initializable {
     }
 
     public void btnSearchOnAction(ActionEvent actionEvent) {
-        setTextToValues(new CustomerServiceImpl().searchCustomerById(txtId.getText()));
+        setTextToValues(serviceType.searchCustomerById(txtId.getText()));
     }
 
     private void setTextToValues(Customer customer) {

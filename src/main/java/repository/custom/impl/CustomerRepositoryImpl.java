@@ -1,19 +1,16 @@
-package controller.customer;
+package repository.custom.impl;
 
 import db.DbConnection;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.control.Alert;
 import model.Customer;
-import model.tm.CustomerTM;
+import repository.custom.CustomerRepository;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CustomerServiceImpl implements CustomerService {
+public class CustomerRepositoryImpl implements CustomerRepository {
     @Override
-    public boolean addCustomer(Customer customer) {
+    public boolean create(Customer customer) {
 
         try {
 
@@ -36,24 +33,22 @@ public class CustomerServiceImpl implements CustomerService {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
-
     }
 
     @Override
-    public boolean updateCustomer(Customer customer) {
+    public boolean update(Customer customer) {
         return false;
     }
 
     @Override
-    public boolean deleteCustomer(String id) {
+    public boolean deleteById(String id) {
         try {
             Connection connection = DbConnection.getInstance().getConnection();
 
             PreparedStatement psTm = connection.prepareStatement("DELETE FROM customer WHERE CustID=?");
             psTm.setString(1,id);
 
-           return psTm.executeUpdate()>0;
+            return psTm.executeUpdate()>0;
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -61,7 +56,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer searchCustomerById(String id) {
+    public Customer getById(String id) {
         try {
 
             Connection connection = DbConnection.getInstance().getConnection();
