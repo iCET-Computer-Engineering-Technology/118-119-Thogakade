@@ -3,6 +3,7 @@ package repository.custom.impl;
 import db.DbConnection;
 import model.Customer;
 import repository.custom.CustomerRepository;
+import util.CrudUtil;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -14,21 +15,17 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 
         try {
 
-            Connection connection = DbConnection.getInstance().getConnection();
-
-            PreparedStatement psTm = connection.prepareStatement("INSERT INTO customer VALUES(?,?,?,?,?,?,?,?,?)");
-
-            psTm.setString(1, customer.getId());
-            psTm.setString(2, customer.getTitle());
-            psTm.setString(3, customer.getName());
-            psTm.setObject(4, customer.getDobValue());
-            psTm.setDouble(5, customer.getSalary());
-            psTm.setString(6, customer.getAddress());
-            psTm.setString(7, customer.getCity());
-            psTm.setString(8, customer.getProvince());
-            psTm.setString(9, customer.getPostalCode());
-
-            return psTm.executeUpdate() > 0;
+           return CrudUtil.execute("INSERT INTO customer VALUES(?,?,?,?,?,?,?,?,?)",
+                    customer.getId(),
+                    customer.getTitle(),
+                    customer.getName(),
+                    customer.getDobValue(),
+                    customer.getSalary(),
+                    customer.getAddress(),
+                    customer.getCity(),
+                    customer.getProvince(),
+                    customer.getPostalCode()
+                    );
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -43,12 +40,8 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     @Override
     public boolean deleteById(String id) {
         try {
-            Connection connection = DbConnection.getInstance().getConnection();
 
-            PreparedStatement psTm = connection.prepareStatement("DELETE FROM customer WHERE CustID=?");
-            psTm.setString(1,id);
-
-            return psTm.executeUpdate()>0;
+          return CrudUtil.execute("DELETE FROM customer WHERE CustID=?", id);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -59,12 +52,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     public Customer getById(String id) {
         try {
 
-            Connection connection = DbConnection.getInstance().getConnection();
-
-            PreparedStatement psTM = connection.prepareStatement("SELECT * FROM customer WHERE CustID = ?");
-
-            psTM.setString(1,id);
-            ResultSet resultSet = psTM.executeQuery();
+           ResultSet resultSet = CrudUtil.execute("SELECT * FROM customer WHERE CustID=?", id);
 
             resultSet.next();
 
@@ -89,11 +77,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     public List<Customer> getAll() {
         try {
 
-            Connection connection = DbConnection.getInstance().getConnection();
-
-            Statement statement = connection.createStatement();
-
-            ResultSet resultSet = statement.executeQuery("SELECT * FROm customer");
+            ResultSet resultSet = CrudUtil.execute("SELECT * FROM customer");
 
             ArrayList<Customer> customerArrayList = new ArrayList<>();
 
