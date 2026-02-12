@@ -144,10 +144,14 @@ public class CustomerFormController implements Initializable {
 
         System.out.println(customer);
 
-        if (serviceType.addCustomer(customer)) {
-            new Alert(Alert.AlertType.INFORMATION, "Customer Added !").show();
-        } else {
-            new Alert(Alert.AlertType.ERROR, "Customer not Added !").show();
+        try {
+            if (serviceType.addCustomer(customer)) {
+                new Alert(Alert.AlertType.INFORMATION, "Customer Added !").show();
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Customer not Added !").show();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
 
     }
@@ -159,24 +163,29 @@ public class CustomerFormController implements Initializable {
 
     public void loadTable() {
 
-        List<Customer> all = new CustomerServiceImpl().getAll();
-        ArrayList<CustomerTM> customerTMArrayList = new ArrayList<>();
+        try {
+            List<Customer> all = new CustomerServiceImpl().getAll();
+            ArrayList<CustomerTM> customerTMArrayList = new ArrayList<>();
 
-        all.forEach(customer -> {
-            customerTMArrayList.add(new CustomerTM(
-                    customer.getId(),
-                    customer.getTitle(),
-                    customer.getName(),
-                    customer.getDobValue(),
-                    customer.getSalary(),
-                    customer.getAddress(),
-                    customer.getCity(),
-                    customer.getProvince(),
-                    customer.getPostalCode()
-            ));
-        });
+            all.forEach(customer -> {
+                customerTMArrayList.add(new CustomerTM(
+                        customer.getId(),
+                        customer.getTitle(),
+                        customer.getName(),
+                        customer.getDobValue(),
+                        customer.getSalary(),
+                        customer.getAddress(),
+                        customer.getCity(),
+                        customer.getProvince(),
+                        customer.getPostalCode()
+                ));
+            });
 
-        tblCustomers.setItems(FXCollections.observableArrayList(customerTMArrayList));
+            tblCustomers.setItems(FXCollections.observableArrayList(customerTMArrayList));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
 
 
     }
@@ -190,7 +199,11 @@ public class CustomerFormController implements Initializable {
     }
 
     public void btnSearchOnAction(ActionEvent actionEvent) {
-        setTextToValues(serviceType.searchCustomerById(txtId.getText()));
+        try {
+            setTextToValues(serviceType.searchCustomerById(txtId.getText()));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void setTextToValues(Customer customer) {

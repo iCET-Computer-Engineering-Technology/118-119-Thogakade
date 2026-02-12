@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Rectangle?>
@@ -23,5 +24,11 @@
       <Label fx:id="lblName" layoutX="376.0" layoutY="91.0" text="Name" />
       <Label fx:id="lblAddress" layoutX="488.0" layoutY="91.0" text="Address" />
       <Label fx:id="lblPhone" layoutX="605.0" layoutY="91.0" text="TP" />
+      <ComboBox fx:id="cmbItemIds" layoutX="18.0" layoutY="138.0" prefWidth="150.0" promptText="Item Codes" />
+      <Label fx:id="lblItemName" layoutX="207.0" layoutY="142.0" text="Item Name" />
+      <Label fx:id="lblDescription" layoutX="346.0" layoutY="142.0" text="Description" />
+      <Label fx:id="lblStock" layoutX="483.0" layoutY="142.0" text="Stock" />
+      <Label fx:id="lblUnitPrice" layoutX="578.0" layoutY="142.0" text="Unit Price" />
+      <Separator layoutX="31.0" layoutY="125.0" prefHeight="0.0" prefWidth="630.0" />
    </children>
 </AnchorPane>

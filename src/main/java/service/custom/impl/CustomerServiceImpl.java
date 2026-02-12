@@ -15,7 +15,7 @@ public class CustomerServiceImpl implements CustomerService {
     CustomerRepository customerRepository = RepositoryFactory.getInstance().getRepositoryType(RepositoryType.CUSTOMER);
 
     @Override
-    public boolean addCustomer(Customer customer) {
+    public boolean addCustomer(Customer customer) throws SQLException {
        return customerRepository.create(customer);
     }
 
@@ -30,17 +30,17 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer searchCustomerById(String id) {
+    public Customer searchCustomerById(String id) throws SQLException {
        return customerRepository.getById(id);
     }
 
     @Override
-    public List<Customer> getAll() {
+    public List<Customer> getAll() throws SQLException {
         return customerRepository.getAll();
     }
 
     @Override
-    public List<String> getAllCustomerIDs() {
+    public List<String> getAllCustomerIDs() throws SQLException {
         List<Customer> all = getAll();
         ArrayList<String> idList = new ArrayList<>();
         for (Customer customer : all) {

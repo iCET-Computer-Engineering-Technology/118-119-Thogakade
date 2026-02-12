@@ -3,6 +3,9 @@ package repository.custom;
 import model.Item;
 import repository.CrudRepository;
 
-public interface ItemRepository extends CrudRepository<Item,String> {
+import java.sql.SQLException;
+import java.util.List;
 
+public interface ItemRepository extends CrudRepository<Item,String> {
+        List<String> getItemCodes() throws SQLException;
 }
