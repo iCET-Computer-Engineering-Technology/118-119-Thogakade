@@ -48,4 +48,40 @@ public class DashboardController {
         }
     }
 
+    @FXML
+    void btnOrderOnAction(ActionEvent event){
+        System.out.println("hii");
+        try {
+            URL resource = this.getClass().getResource("/view/order_form.fxml");
+
+            assert resource != null;
+            Parent parent = FXMLLoader.load(resource);
+
+            dashRoot.getChildren().clear();
+            dashRoot.getChildren().add(parent);
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    @FXML
+    public void btnOrderFormOnAction(ActionEvent actionEvent) {
+        System.out.println("hii");
+        try {
+            URL resource = this.getClass().getResource("/view/order_from.fxml");
+
+            assert resource != null;
+            Parent parent = FXMLLoader.load(resource);
+
+            dashRoot.getChildren().clear();
+            dashRoot.getChildren().add(parent);
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void btnTestOnAction(ActionEvent actionEvent) {
+        System.out.println("Test");
+    }
 }

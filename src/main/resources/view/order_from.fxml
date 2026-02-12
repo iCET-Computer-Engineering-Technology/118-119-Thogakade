@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="555.0" prefWidth="708.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.order.OrderController">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00519e" height="70.0" stroke="BLACK" strokeType="INSIDE" width="708.0" />
+      <Label layoutX="290.0" layoutY="17.0" text="Order Form" textFill="WHITE">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <TextField layoutX="18.0" layoutY="87.0" promptText="Order ID" />
+      <Label fx:id="lblDate" layoutX="614.0" layoutY="17.0" text="yyyy-MM-dd" textFill="WHITE" />
+      <Label fx:id="lblTime" layoutX="626.0" layoutY="45.0" text="00:00:00" textFill="WHITE" />
+      <ComboBox fx:id="cmbCustomerIds" layoutX="191.0" layoutY="87.0" prefWidth="150.0" promptText="Customer ID" />
+      <Label fx:id="lblName" layoutX="376.0" layoutY="91.0" text="Name" />
+      <Label fx:id="lblAddress" layoutX="488.0" layoutY="91.0" text="Address" />
+      <Label fx:id="lblPhone" layoutX="605.0" layoutY="91.0" text="TP" />
+   </children>
+</AnchorPane>
