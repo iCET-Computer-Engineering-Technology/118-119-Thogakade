@@ -32,18 +32,18 @@
       <Label fx:id="lblStock" layoutX="483.0" layoutY="142.0" text="Stock" />
       <Label fx:id="lblUnitPrice" layoutX="578.0" layoutY="142.0" text="Unit Price" />
       <Separator layoutX="31.0" layoutY="125.0" prefHeight="0.0" prefWidth="630.0" />
-      <TableView fx:id="tblCart" layoutX="28.0" layoutY="211.0" prefHeight="274.0" prefWidth="630.0">
+      <TableView fx:id="tblCart" layoutX="28.0" layoutY="211.0" prefHeight="274.0" prefWidth="655.0">
         <columns>
           <TableColumn fx:id="colCode" text="Code" />
           <TableColumn fx:id="colDescription" prefWidth="137.0" text="Description" />
             <TableColumn fx:id="colUnitPrice" prefWidth="144.0" text="Unit Price" />
-            <TableColumn fx:id="colQtyOnHand" prefWidth="155.0" text="Qty On Hand" />
-            <TableColumn fx:id="colTotal" prefWidth="113.0" text="Total" />
+            <TableColumn fx:id="colQtyOnHand" prefWidth="174.0" text="Qty On Hand" />
+            <TableColumn fx:id="colTotal" prefWidth="119.0" text="Total" />
         </columns>
       </TableView>
       <Button layoutX="573.0" layoutY="177.0" mnemonicParsing="false" onAction="#btnAddToCartOnAction" text="Add To Cart" />
       <TextField fx:id="txtQtyOnHand" layoutX="447.0" layoutY="177.0" prefHeight="25.0" prefWidth="104.0" promptText="QTY ON HAND" />
-      <Button layoutX="574.0" layoutY="495.0" mnemonicParsing="false" text="Place Order" />
+      <Button layoutX="574.0" layoutY="495.0" mnemonicParsing="false" onAction="#btnPlaceOrderOnAction" text="Place Order" />
       <Label layoutX="31.0" layoutY="499.0" text="Net Total : ">
          <font>
             <Font size="15.0" />

@@ -11,15 +11,19 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Duration;
 import model.Customer;
 import model.Item;
+import model.Order;
+import model.OrderDetails;
 import model.tm.CartTM;
 import service.ServiceFactory;
 import service.custom.CustomerService;
 import service.custom.ItemService;
+import service.custom.OrderService;
 import util.ServiceType;
 
 import java.net.URL;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -63,7 +67,7 @@ public class OrderController implements Initializable {
 
     CustomerService customerService = ServiceFactory.getInstance().getServiceType(ServiceType.CUSTOMER);
     ItemService itemService = ServiceFactory.getInstance().getServiceType(ServiceType.ITEM);
-
+    OrderService orderService = ServiceFactory.getInstance().getServiceType(ServiceType.ORDER);
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         colCode.setCellValueFactory(new PropertyValueFactory<>("code"));
@@ -171,5 +175,34 @@ public class OrderController implements Initializable {
             total+=cartTM.getTotal();
         }
         lblNetTotal.setText(total.toString());
+    }
+
+    public void btnPlaceOrderOnAction(ActionEvent actionEvent) {
+        ArrayList<OrderDetails> orderDetailsArrayList = new ArrayList<>();
+
+        cartTMArrayList.forEach(cartTM -> orderDetailsArrayList.add(new OrderDetails(
+                cartTM.getOrderId(),
+                cartTM.getCode(),
+                cartTM.getQtyOnHand(),
+                0.0
+        )));
+
+        Order order = new Order(
+                txtOrderId.getText(),
+                LocalDate.now(),
+                cmbCustomerIds.getValue().toString(),
+                orderDetailsArrayList
+        );
+
+        try {
+            if (orderService.placeOrder(order)){
+                new Alert(Alert.AlertType.INFORMATION,"Order Placed !").show();
+            }else {
+                new Alert(Alert.AlertType.ERROR,"Order Not Placed !").show();
+            }
+        } catch (SQLException e) {
+            new Alert(Alert.AlertType.ERROR,e.getMessage()).show();
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -17,7 +17,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 
            return CrudUtil.execute("INSERT INTO customer VALUES(?,?,?,?,?,?,?,?,?)",
                     customer.getId(),
-                    customer.getTitle(),
+                    null,
                     customer.getName(),
                     customer.getDobValue(),
                     customer.getSalary(),
