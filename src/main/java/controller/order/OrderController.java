@@ -3,13 +3,15 @@ package controller.order;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Duration;
 import model.Customer;
 import model.Item;
+import model.tm.CartTM;
 import service.ServiceFactory;
 import service.custom.CustomerService;
 import service.custom.ItemService;
@@ -20,11 +22,21 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
 public class OrderController implements Initializable {
+    public TableView tblCart;
+    public TableColumn colCode;
+    public TableColumn colDescription;
+    public TableColumn colUnitPrice;
+    public TableColumn colQtyOnHand;
+    public TableColumn colTotal;
+    public TextField txtQtyOnHand;
+    public Label lblNetTotal;
+    public TextField txtOrderId;
     @FXML
     private ComboBox cmbItemIds;
     @FXML
@@ -51,8 +63,15 @@ public class OrderController implements Initializable {
 
     CustomerService customerService = ServiceFactory.getInstance().getServiceType(ServiceType.CUSTOMER);
     ItemService itemService = ServiceFactory.getInstance().getServiceType(ServiceType.ITEM);
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        colCode.setCellValueFactory(new PropertyValueFactory<>("code"));
+        colDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
+        colUnitPrice.setCellValueFactory(new PropertyValueFactory<>("unitPrice"));
+        colQtyOnHand.setCellValueFactory(new PropertyValueFactory<>("qtyOnHand"));
+        colTotal.setCellValueFactory(new PropertyValueFactory<>("total"));
+
         loadDateAndTime();
         loadCustomerIDs();
         loadItemCodes();
@@ -74,7 +93,7 @@ public class OrderController implements Initializable {
             Item itemByCode = itemService.getItemByCode(newValue);
 
             lblDescription.setText(itemByCode.getDescription());
-//            lblStock.setText(itemByCode.getStock().toString());
+            lblStock.setText(itemByCode.getStock().toString());
             lblUnitPrice.setText(itemByCode.getUnitPrice().toString());
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -93,7 +112,7 @@ public class OrderController implements Initializable {
 
     }
 
-    private void loadItemCodes(){
+    private void loadItemCodes() {
         try {
             List<String> itemCodes = itemService.getItemCodes();
             cmbItemIds.setItems(FXCollections.observableArrayList(itemCodes));
@@ -129,4 +148,28 @@ public class OrderController implements Initializable {
     }
 
 
+    ArrayList<CartTM> cartTMArrayList = new ArrayList<>();
+
+    public void btnAddToCartOnAction(ActionEvent actionEvent) {
+
+        cartTMArrayList.add(new CartTM(
+                cmbItemIds.getValue().toString(),
+                txtOrderId.getText(),
+                lblDescription.getText(),
+                Double.parseDouble(lblUnitPrice.getText()),
+                Integer.parseInt(txtQtyOnHand.getText()),
+                Double.parseDouble(lblUnitPrice.getText()) * Integer.parseInt(txtQtyOnHand.getText())
+        ));
+
+        tblCart.setItems(FXCollections.observableArrayList(cartTMArrayList));
+        calNetTotal();
+    }
+
+    private void calNetTotal(){
+        Double total = 0.0;
+        for(CartTM cartTM : cartTMArrayList){
+            total+=cartTM.getTotal();
+        }
+        lblNetTotal.setText(total.toString());
+    }
 }
