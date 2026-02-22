@@ -1,33 +1,32 @@
 package util;
 
 import model.Customer;
-import model.Item;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl;
+import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
 public class HibernateUtil {
-    private static SessionFactory session = createSession();
+    private static SessionFactory session = createSessionFactory();
 
-    private static SessionFactory createSession() {
-        StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder();
-        builder.configure("hibernate.cfg.xml");
-        builder.build();
+    private static SessionFactory createSessionFactory() {
+        StandardServiceRegistry build = new StandardServiceRegistryBuilder()
+                .configure("hibernate.cfg.xml")
+                .build();
 
-        Metadata metadataSources = new MetadataSources()
+        Metadata metadata = new MetadataSources(build)
                 .addAnnotatedClass(Customer.class)
-                .addAnnotatedClass(Item.class)
                 .getMetadataBuilder()
                 .applyImplicitNamingStrategy(ImplicitNamingStrategyJpaCompliantImpl.INSTANCE)
                 .build();
 
-        return metadataSources.getSessionFactoryBuilder().build();
+        return metadata.getSessionFactoryBuilder().build();
     }
 
-    public static Session getSession(){
+    public static Session getSession() {
         return session.openSession();
     }
 }

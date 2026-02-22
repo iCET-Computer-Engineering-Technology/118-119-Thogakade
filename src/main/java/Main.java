@@ -1,9 +1,13 @@
+import org.hibernate.Session;
 import org.jasypt.util.text.BasicTextEncryptor;
+import util.HibernateUtil;
 
 public class Main {
     public static void main(String[] args) {
         Starter.main(args);
+//        Session session = HibernateUtil.getSession();
 
+//        System.out.println(session);
 //        sample@1234
 
 //        =jkhkjSLKJL564655dffgdfg1346545kj3j3n33h == sample@1234

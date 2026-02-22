@@ -2,8 +2,10 @@ package repository.custom.impl;
 
 import db.DbConnection;
 import model.Customer;
+import org.hibernate.Session;
 import repository.custom.CustomerRepository;
 import util.CrudUtil;
+import util.HibernateUtil;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -13,23 +15,32 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     @Override
     public boolean create(Customer customer) {
 
-        try {
+//        try {
+//
+//           return CrudUtil.execute("INSERT INTO customer VALUES(?,?,?,?,?,?,?,?,?)",
+//                    customer.getId(),
+//                    null,
+//                    customer.getName(),
+//                    customer.getDobValue(),
+//                    customer.getSalary(),
+//                    customer.getAddress(),
+//                    customer.getCity(),
+//                    customer.getProvince(),
+//                    customer.getPostalCode()
+//                    );
+//
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
 
-           return CrudUtil.execute("INSERT INTO customer VALUES(?,?,?,?,?,?,?,?,?)",
-                    customer.getId(),
-                    null,
-                    customer.getName(),
-                    customer.getDobValue(),
-                    customer.getSalary(),
-                    customer.getAddress(),
-                    customer.getCity(),
-                    customer.getProvince(),
-                    customer.getPostalCode()
-                    );
+        Session session = HibernateUtil.getSession();
+        session.beginTransaction();
+        session.persist(customer);
+        session.getTransaction().commit();
+        session.close();
+        return true;
 
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+
     }
 
     @Override
