@@ -24,11 +24,7 @@ public class Starter extends Application {
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/dashboard.fxml"));
 
-        fxmlLoader.setControllerFactory(aClass -> {
-            Object instance = injector.getInstance(aClass);
-            injector.injectMembers(instance);
-            return instance;
-        });
+        fxmlLoader.setControllerFactory(injector::getInstance);
 
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();
