@@ -1,8 +1,11 @@
 package controller.customer;
 
+
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 import db.DbConnection;
+
+import jakarta.inject.Inject;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -88,7 +91,9 @@ public class CustomerFormController implements Initializable {
     @FXML
     private JFXTextField txtSalary;
 
-    CustomerService serviceType = ServiceFactory.getInstance().getServiceType(ServiceType.CUSTOMER);
+    @Inject
+    CustomerService serviceType;
+//    CustomerService serviceType = ServiceFactory.getInstance().getServiceType(ServiceType.CUSTOMER);
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -168,7 +173,7 @@ public class CustomerFormController implements Initializable {
     public void loadTable() {
 
         try {
-            List<Customer> all = new CustomerServiceImpl().getAll();
+            List<Customer> all = serviceType.getAll();
             ArrayList<CustomerTM> customerTMArrayList = new ArrayList<>();
 
             all.forEach(customer -> {
