@@ -15,6 +15,10 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.Customer;
 import model.tm.CustomerTM;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.view.JasperViewer;
 import service.ServiceFactory;
 import service.custom.CustomerService;
 import service.custom.impl.CustomerServiceImpl;
@@ -219,4 +223,20 @@ public class CustomerFormController implements Initializable {
     }
 
 
+    public void btnCustomerReportOnAction(ActionEvent actionEvent) {
+        try {
+
+            JasperDesign design = JRXmlLoader.load("src/main/resources/report/customers-report.jrxml");
+            JasperReport jasperReport = JasperCompileManager.compileReport(design);
+
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, DbConnection.getInstance().getConnection());
+
+            JasperExportManager.exportReportToPdfFile(jasperPrint,"customer-report.pdf");
+
+            JasperViewer.viewReport(jasperPrint,false);
+
+        } catch (JRException | SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
