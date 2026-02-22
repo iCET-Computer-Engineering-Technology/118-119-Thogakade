@@ -8,24 +8,14 @@ import javafx.stage.Stage;
 
 public class Starter extends Application {
 
-    private Injector injector;
-
     public static void main(String[] args) {
         launch();
-    }
-
-    @Override
-    public void init(){
-        this.injector = Guice.createInjector(new AppModule());
     }
 
     @Override
     public void start(Stage stage) throws Exception {
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/dashboard.fxml"));
-
-        fxmlLoader.setControllerFactory(injector::getInstance);
-
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();
     }
